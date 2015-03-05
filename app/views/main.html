@@ -1,0 +1,251 @@
+<div ng-controller="MainCtrl as main">
+<div class='row'>
+    <div class='col-md-12'>
+        <h1>HAZOPS Table Overview</h1>
+        <p>
+            A <strong>Hazard and Operability Study</strong> (HAZOP) requires an in depth qualitative analysis of possible failures and faults that are part of a system, in this case an autonomous vehicle.
+        </p>
+        <p>
+            This page offers a tabular view of an example HAZOPS based around the operation of a LIDAR array as part of an autonomous vehicle. <strong>This was used to inform and iterate</strong> on a clear structure for communicating a HAZOP study. Its iterative design process informed design changes made in a bid to make the tabular data more digestable to someone unfamiliar system.
+        </p>
+
+        <h3>
+            <strong>Hint:</strong> You can scroll each cell of the table to see all the information in each!
+        </h3>
+        <div class='row'>
+            <div class='col-xs-2'>
+                <h4>Table Sorting: </h4>
+            </div>
+            <div class='col-xs-5'>
+                <select class="form-control pull-right" ng-model="main.order" ng-options="order as order.title for order in main.orders"></select>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class='col-md-12'>
+    <table id='hazops-table' class="table table-responsive table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Guide Word</th>
+                <th>Parameter</th>
+                <th>Element</th>
+                <th>Deviation</th>
+                <th>Possible Causes</th>
+                <th>Consequences</th>
+                <th>Safeguards</th>
+                <th style='width:200px;'>Comments</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="hazop in main.hazops | orderBy:main.order.key:main.order.reverse">
+                <td><strong>{{ hazop.id }}</strong></td>
+                <td>
+                    <div class='scrollable'>
+                        {{ hazop.guideWord }}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{ hazop.parameter }}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{ hazop.element }}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{ hazop.deviation }}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        <ol>
+                            <li ng-repeat="cause in hazop.possibleCauses">{{ cause }}</li>
+                        </ol>
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        <ol>
+                            <li ng-repeat="consequence in hazop.consequences">{{ consequence }}</li>
+                        </ol>
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        <ol ng-repeat='type in hazop.safeguards'>
+                            <h4>{{ type.title }}</h4>
+                            <li ng-repeat='safeguard in type.list'>{{ safeguard }}</li>
+                        </ol>
+                    </div>
+                </td>
+                <td><div class='scrollable'>{{ hazop.comments }}</div></td>
+                <td><div class='scrollable'>
+                    <h4>Required Actions:</h4>
+                    <ol>
+                        <li ng-repeat='task in hazop.actions.required'>
+                            {{ task }}
+                        </li>
+                    </ol>
+                    <h4>Assigned to:</h4>
+                    <p>{{ hazop.actions.assigned }}</p>
+                </div>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>{{main.new.id}}</strong></td>
+                <td>
+                    <div class='scrollable'>
+                        {{main.new.guideWord}}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{main.new.parameter}}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{main.new.element}}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{main.new.deviation}}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{main.new.possibleCauses}}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{main.new.consequence}}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{main.new.safeguards}}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        {{main.new.comments}}
+                    </div>
+                </td>
+                <td>
+                    <div class='scrollable'>
+                        <p>{{main.new.actions.required}}</p>
+                        <p>{{main.new.actions.assigned}}</p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class='col-md-8 col-lg-8'>
+<div class='well'>
+    <form name='main.addForm' class='form form-horizontal' ng-submit='main.addHazop()' >
+        <h3>Add new HAZOPS entry to the table</h3>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Unique ID</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="ID #" ng-model='main.new.id'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Guideword</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Guideword" ng-model='main.new.guideWord'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Parameter</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Parameter" ng-model='main.new.parameter'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Element</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="New Element" ng-model="main.new.element">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Deviation</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Deviation" ng-model='main.new.deviation'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Causes</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Causes" ng-model='main.new.possibleCauses'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Consequences</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Consequence" ng-model='main.new.consequence'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Safeguards</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Safeguards" ng-model='main.new.safeguards'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Comments</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Comments" ng-model='main.new.comments'>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-xs-6'>
+                <label>Actions Required: </label><textarea class='form-control' placeholder='Required actions' ng-model='main.new.actions.required'></textarea>
+            </div>
+            <div class='col-xs-6'>
+                <label>Assignee: </label><input type='text' class='form-control' placeholder='Assignee' ng-model='main.new.actions.assigned'>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign"></span> Add new HAZOP</button>
+    </form>
+</div>
+</div>
+<div class='col-md-4 col-lg-4 well'>
+    <h3>Support for distributed teams and realtime visualisation of creation</h3>
+    <p>
+        This system also has the ability to add a new entry to the table dynamically on the page. <strong>In a more developed version,</strong> this new data would be entered into a database for later retrieval.
+    </p>
+    <p>
+        This <strong>simplified</strong> process has been added to aid the <italics>Reporter</italics> in HAZOPS sessions, allowing them to add the data to the study in an efficient manner.
+    </p>
+    <p>
+        Through the project's use of <strong>AngularJS</strong> and (in the future) <strong>AJAX</strong> and <strong>WebSockets</strong> (through sockets.io library), a dynamic, realtime view of the entry being brainstormed on could be displayed on a overhead projector to visualise what the HAZOPS team were discussing and adding into the report. This would allow teams to work on a HAZOPS report across a distributed workspace, reducing costs and time wasted in travelling.
+    </p>
+</div>
+
+    <!-- <div class="input-group">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-search"></span>
+        </span>
+        <input type="text" class="form-control" ng-model="main.searchInput">
+    </div>
+    <p>{{main.searchInput}}</p>
+
+    <h3>A list of tv shows</h3>
+    <ul class='list-group'>
+        <li class="list-group-item" ng-repeat='show in main.shows  | filter:main.searchInput | orderBy:main.order.key:main.order.reverse'>
+            <span class='glyphicon glyphicon-star' ng-if="show.favorite"></span> {{show.title}} <span class='badge'>{{show.year}}</span>
+        </li>
+    </ul>
+    <select class="form-control pull-right" ng-model="main.order" ng-options="order as order.title for order in main.orders"></select> -->
+</div>
