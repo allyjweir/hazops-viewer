@@ -1,6 +1,6 @@
-<div ng-controller="MainCtrl as main">
+<div ng-controller="TableCtrl as main">
 <div class='row'>
-    <div class='col-md-12'>
+    <div class='col-md-12 well'>
         <h1>HAZOPS Table Overview</h1>
         <p>
             A <strong>Hazard and Operability Study</strong> (HAZOP) requires an in depth qualitative analysis of possible failures and faults that are part of a system, in this case an autonomous vehicle.
@@ -8,26 +8,15 @@
         <p>
             This page offers a tabular view of an example HAZOPS based around the operation of a LIDAR array as part of an autonomous vehicle. <strong>This was used to inform and iterate</strong> on a clear structure for communicating a HAZOP study. Its iterative design process informed design changes made in a bid to make the tabular data more digestable to someone unfamiliar system.
         </p>
-
-        <h3>
-            <strong>Hint:</strong> You can scroll each cell of the table to see all the information in each!
-        </h3>
-        <div class='row'>
-            <div class='col-xs-2'>
-                <h4>Table Sorting: </h4>
-            </div>
-            <div class='col-xs-5'>
-                <select class="form-control pull-right" ng-model="main.order" ng-options="order as order.title for order in main.orders"></select>
-            </div>
-        </div>
     </div>
 </div>
 <hr/>
-<div class='col-md-12'>
-    <table id='hazops-table' class="table table-responsive table-bordered table-striped">
+<div class='col-lg-9 col-md-12 col-sm-12 col-xs-12'>
+    <div class='table-responsive'>
+    <table id='hazops-table' class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>ID</th>
+                <th class='id'>ID</th>
                 <th>Guide Word</th>
                 <th>Parameter</th>
                 <th>Element</th>
@@ -41,7 +30,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="hazop in main.hazops | orderBy:main.order.key:main.order.reverse">
-                <td><strong>{{ hazop.id }}</strong></td>
+                <td class='id'><strong>{{ hazop.id }}</strong></td>
                 <td>
                     <div class='scrollable'>
                         {{ hazop.guideWord }}
@@ -100,54 +89,84 @@
             <tr>
                 <td><strong>{{main.new.id}}</strong></td>
                 <td>
-                    <div class='scrollable'>
+
                         {{main.new.guideWord}}
-                    </div>
+
                 </td>
                 <td>
-                    <div class='scrollable'>
+
                         {{main.new.parameter}}
-                    </div>
+
                 </td>
                 <td>
-                    <div class='scrollable'>
+
                         {{main.new.element}}
-                    </div>
+
                 </td>
                 <td>
-                    <div class='scrollable'>
+
                         {{main.new.deviation}}
-                    </div>
+
                 </td>
                 <td>
-                    <div class='scrollable'>
+
                         {{main.new.possibleCauses}}
-                    </div>
+
                 </td>
                 <td>
-                    <div class='scrollable'>
+
                         {{main.new.consequence}}
-                    </div>
+
                 </td>
                 <td>
-                    <div class='scrollable'>
+
                         {{main.new.safeguards}}
-                    </div>
+
                 </td>
                 <td>
-                    <div class='scrollable'>
+
                         {{main.new.comments}}
-                    </div>
+
                 </td>
                 <td>
-                    <div class='scrollable'>
                         <p>{{main.new.actions.required}}</p>
                         <p>{{main.new.actions.assigned}}</p>
-                    </div>
                 </td>
             </tr>
         </tbody>
     </table>
+    </div>
+</div>
+<div class='col-lg-3 col-md-12 col-sm-12 col-xs-12 well'>
+    <h2>Notes</h2>
+    <ul>
+        <li>
+            You can scroll within each cell to see all the content
+        </li>
+        <li>
+            Hover over headers to see more details
+        </li>
+    </ul>
+    <hr>
+    <h2>Controls</h2>
+    <div class='row'>
+        <div class='col-xs-6'>
+            <h4>Sort table by: </h4>
+        </div>
+        <div class='col-xs-6'>
+            <select class="form-control pull-right" ng-model="main.order" ng-options="order as order.title for order in main.orders"></select>
+        </div>
+    </div>
+    <hr>
+    <h2>Glossary</h2>
+    <ul>
+        <li>
+            <strong>HAZOPS</strong> - Hazard and Operability Study
+        </li>
+        <li>
+            <strong>LIDAR</strong> - a remote sensing technology that measures distance by illuminating a target with a laser and analyzing the reflected light.
+        </li>
+    </ul>
 </div>
 
 <div class='col-md-8 col-lg-8'>

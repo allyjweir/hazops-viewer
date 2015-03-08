@@ -88,3 +88,11 @@ div.scrollable {
     padding: 0;
     overflow: auto;
 }
+
+#hazops-table > tbody > tr > td {
+    font-size:12px
+}
+
+#hazops-table > tbody > tr > td.id {
+    font-size:18px
+}

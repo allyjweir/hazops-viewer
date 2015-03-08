@@ -8,7 +8,7 @@
  * Controller of the hazopsApp
  */
 angular.module('hazopsApp')
-  .controller('AboutCtrl', function ($scope) {
+  .controller('WelcomeCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

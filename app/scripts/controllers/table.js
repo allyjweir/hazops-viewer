@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name hazopsApp.controller:MainCtrl
+ * @name hazopsApp.controller:TableCtrl
  * @description
- * # MainCtrl
+ * # TableCtrl
  * Controller of the hazopsApp
  */
 angular.module('hazopsApp')
-  .controller('MainCtrl', function () {
+  .controller('TableCtrl', function () {
 
     var vm = this;
     vm.hazops = [
