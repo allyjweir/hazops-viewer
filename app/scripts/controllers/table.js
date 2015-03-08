@@ -11,6 +11,9 @@ angular.module('hazopsApp')
   .controller('TableCtrl', function () {
 
     var vm = this;
+
+    vm.title = "LIDAR Array - Velodyne HDL-64E"
+    vm.description = "This Hazard and Operability study analyses the risk of placing a roof mounted LIDAR array on an autonomous vehicle. By analysing key parameters of its operation we can make recommendations of how to keep the vehicle operating safely, reducing the likelihood of injury or death."
     vm.hazops = [
         {
             id: '1',
@@ -221,37 +224,6 @@ vm.addHazop = function() {
     vm.hazops.push(vm.new);
     vm.new = {};
 };
+vm.searchInput = '';
 
-vm.shows = [
-      {
-          title: 'Game of Thrones',
-          year: 2011,
-          favorite: true
-      },
-      {
-          title: 'Walking Dead',
-          year: 2010,
-          favorite: false
-      },
-      {
-          title: 'Firefly',
-          year: 2002,
-          favorite: true
-      },
-      {
-          title: 'Banshee',
-          year: 2013,
-          favorite: true
-      },
-      {
-          title: 'Greys Anatomy',
-          year: 2005,
-          favorite: false
-      }
-  ];
-  vm.new = {};
-  vm.addShow = function() {
-      vm.hazops.push(vm.new);
-      vm.new = {};
-  };
   });

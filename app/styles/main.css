@@ -93,6 +93,15 @@ div.scrollable {
     font-size:12px
 }
 
-#hazops-table > tbody > tr > td.id {
+#hazops-table > thead > tr > th {
     font-size:18px
+}
+
+#hazops-table > tbody > tr > td.id {
+    font-size:40px
+}
+
+.metadataLabel {
+    display: inline;
+    color: blueviolet;
 }

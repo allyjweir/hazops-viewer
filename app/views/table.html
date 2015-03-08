@@ -1,17 +1,22 @@
 <div ng-controller="TableCtrl as main">
 <div class='row'>
-    <div class='col-md-12 well'>
-        <h1>HAZOPS Table Overview</h1>
+    <div class='col-lg-9 col-md-9 col-sm-9 col-xs-12'>
+        <h1><div class='metadataLabel'>Title: </div>{{ main.title }}</h1>
         <p>
-            A <strong>Hazard and Operability Study</strong> (HAZOP) requires an in depth qualitative analysis of possible failures and faults that are part of a system, in this case an autonomous vehicle.
-        </p>
-        <p>
-            This page offers a tabular view of an example HAZOPS based around the operation of a LIDAR array as part of an autonomous vehicle. <strong>This was used to inform and iterate</strong> on a clear structure for communicating a HAZOP study. Its iterative design process informed design changes made in a bid to make the tabular data more digestable to someone unfamiliar system.
+            <div class='metadataLabel'>Description: </div>{{ main.description }}
         </p>
     </div>
 </div>
+
 <hr/>
+<div class='row'>
 <div class='col-lg-9 col-md-12 col-sm-12 col-xs-12'>
+
+    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+      <strong>Hint!</strong> This table will scroll horizontally if on a smaller screen! &harr;
+      <p><strong>Hint 2!</strong> You can also scroll within each cell to see all the content <i class="fa fa-arrows-v"></i></p>
+    </div>
     <div class='table-responsive'>
     <table id='hazops-table' class="table table-bordered table-striped">
         <thead>
@@ -29,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="hazop in main.hazops | orderBy:main.order.key:main.order.reverse">
+            <tr ng-repeat="hazop in main.hazops | filter:main.searchInput | orderBy:main.order.key:main.order.reverse">
                 <td class='id'><strong>{{ hazop.id }}</strong></td>
                 <td>
                     <div class='scrollable'>
@@ -87,46 +92,30 @@
                 </td>
             </tr>
             <tr>
-                <td><strong>{{main.new.id}}</strong></td>
+                <td class='id'><strong>{{main.new.id}}</strong></td>
                 <td>
-
                         {{main.new.guideWord}}
-
                 </td>
                 <td>
-
                         {{main.new.parameter}}
-
                 </td>
                 <td>
-
                         {{main.new.element}}
-
                 </td>
                 <td>
-
                         {{main.new.deviation}}
-
                 </td>
                 <td>
-
                         {{main.new.possibleCauses}}
-
                 </td>
                 <td>
-
                         {{main.new.consequence}}
-
                 </td>
                 <td>
-
                         {{main.new.safeguards}}
-
                 </td>
                 <td>
-
                         {{main.new.comments}}
-
                 </td>
                 <td>
                         <p>{{main.new.actions.required}}</p>
@@ -137,36 +126,54 @@
     </table>
     </div>
 </div>
-<div class='col-lg-3 col-md-12 col-sm-12 col-xs-12 well'>
-    <h2>Notes</h2>
-    <ul>
-        <li>
-            You can scroll within each cell to see all the content
-        </li>
-        <li>
-            Hover over headers to see more details
-        </li>
-    </ul>
-    <hr>
-    <h2>Controls</h2>
+<div class='col-lg-3 col-md-3 col-sm-3 col-xs-12 well'>
+    <h2 class='metadataLabel'>Controls</h2>
     <div class='row'>
-        <div class='col-xs-6'>
-            <h4>Sort table by: </h4>
+        <div class='col-xs-4'>
+            <h4>Search: </h4>
         </div>
-        <div class='col-xs-6'>
+        <div class='col-xs-8'>
+            <div class="input-group">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-search"></span>
+            </span>
+            <input type="text" class="form-control" ng-model="main.searchInput">
+            </div>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-xs-4'>
+            <h4>Sort by: </h4>
+        </div>
+        <div class='col-xs-8'>
             <select class="form-control pull-right" ng-model="main.order" ng-options="order as order.title for order in main.orders"></select>
         </div>
     </div>
-    <hr>
-    <h2>Glossary</h2>
+</div>
+
+<div class='col-lg-3 col-md-12 col-sm-12 col-xs-12 well'>
+    <h2 class='metadataLabel'>Glossary</h2>
     <ul>
         <li>
             <strong>HAZOPS</strong> - Hazard and Operability Study
         </li>
         <li>
+            <strong>Guide word</strong> - A prompt used to guide discussion and encourage participants in a HAZOPS session to come up with possible risks. A full list of the standard ones can be found <a href='http://en.wikipedia.org/wiki/Hazard_and_operability_study#Guide_words_and_parameters'>here.</a>
+        </li>
+        <li>
             <strong>LIDAR</strong> - a remote sensing technology that measures distance by illuminating a target with a laser and analyzing the reflected light.
         </li>
+        <li>
+            <strong>Severity</strong> - A measure of how serious or bad the consequences of a risk or hazard might be
+        </li>
+        <li>
+            <strong>Reactive Safeguard</strong> - A safeguard that reduces the severity of a risk that is likely to happen
+        </li>
+        <li>
+            <strong>Preventive Safeguard</strong> - A safeguard that reduces the likelihood of a risk to happen
+        </li>
     </ul>
+</div>
 </div>
 
 <div class='col-md-8 col-lg-8'>
